@@ -14,13 +14,17 @@
 					<el-submenu index="1-1">
 						<template slot="title">头部样式设置</template>
 						<el-menu-item index="1-1-1">
-							<span class="label inline">背景颜色</span>
+							<span class="label inline" title="站点头部背景颜色"
+								>背景颜色</span
+							>
 							<el-color-picker
 								v-model="previewConfigData.head.back_color"
 							></el-color-picker>
 						</el-menu-item>
 						<el-menu-item index="1-1-2">
-							<span class="label inline">激活背景颜色</span>
+							<span class="label inline" title="标题背景颜色"
+								>激活背景颜色</span
+							>
 							<el-color-picker
 								v-model="previewConfigData.head.active_back_color"
 							></el-color-picker>
@@ -37,7 +41,13 @@
 								v-model="previewConfigData.head.active_color"
 							></el-color-picker>
 						</el-menu-item>
-						<el-menu-item index="1-1-5" style="height: 150px">
+						<el-menu-item index="1-1-5">
+							<span class="label inline">显示背景图片</span>
+							<el-checkbox
+								v-model="previewConfigData.head.isShow"
+							></el-checkbox>
+						</el-menu-item>
+						<el-menu-item index="1-1-6" style="height: 150px">
 							<span class="label inline">背景图片</span>
 							<el-upload
 								class="image-upload"
@@ -101,7 +111,10 @@
 								v-model="previewConfigData.L2Dwidget.isRender"
 							></el-checkbox>
 						</el-menu-item>
-						<el-menu-item index="1-3-2">
+						<el-menu-item
+							index="1-3-2"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label">选择模板</span>
 							<el-select
 								v-model="previewConfigData.L2Dwidget.modelName"
@@ -117,25 +130,37 @@
 								</el-option>
 							</el-select>
 						</el-menu-item>
-						<el-menu-item index="1-3-3">
+						<el-menu-item
+							index="1-3-3"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline">标签模式</span>
 							<el-checkbox
 								v-model="previewConfigData.L2Dwidget.tagMode"
 							></el-checkbox>
 						</el-menu-item>
-						<el-menu-item index="1-3-4">
+						<el-menu-item
+							index="1-3-4"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline">调试</span>
 							<el-checkbox
 								v-model="previewConfigData.L2Dwidget.debug"
 							></el-checkbox>
 						</el-menu-item>
-						<el-menu-item index="1-3-5">
+						<el-menu-item
+							index="1-3-5"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline">日志</span>
 							<el-checkbox
 								v-model="previewConfigData.L2Dwidget.log"
 							></el-checkbox>
 						</el-menu-item>
-						<el-menu-item index="1-3-6">
+						<el-menu-item
+							index="1-3-6"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label">模型缩放</span>
 							<el-input
 								style="width: 140px"
@@ -146,16 +171,22 @@
 								placeholder="请输入内容"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-7">
+						<el-menu-item
+							index="1-3-7"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label">超级采样</span>
 							<el-input
 								style="width: 140px"
 								type="number"
 								v-model.number="previewConfigData.L2Dwidget.display.superSample"
-								placeholder="请输入内容"
+								placeholder=""
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-8">
+						<el-menu-item
+							index="1-3-8"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline" style="width: 56px">位置</span>
 							<el-select
 								v-model="previewConfigData.L2Dwidget.display.position"
@@ -166,7 +197,10 @@
 								<el-option key="2" label="right" value="right"></el-option>
 							</el-select>
 						</el-menu-item>
-						<el-menu-item index="1-3-9">
+						<el-menu-item
+							index="1-3-9"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline" style="width: 56px">画布宽</span>
 							<el-input
 								style="width: 140px"
@@ -175,7 +209,10 @@
 								placeholder="请输入内容"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-10">
+						<el-menu-item
+							index="1-3-10"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline" style="width: 56px">画布高</span>
 							<el-input
 								style="width: 140px"
@@ -184,7 +221,10 @@
 								placeholder="请输入内容"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-11">
+						<el-menu-item
+							index="1-3-11"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label">水平偏移</span>
 							<el-input
 								style="width: 140px"
@@ -193,7 +233,10 @@
 								placeholder="请输入内容"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-12">
+						<el-menu-item
+							index="1-3-12"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label">垂直偏移</span>
 							<el-input
 								style="width: 140px"
@@ -202,7 +245,10 @@
 								placeholder="请输入内容"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-13">
+						<el-menu-item
+							index="1-3-13"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline" style="width: 56px">透明度</span>
 							<el-input
 								style="width: 140px"
@@ -216,7 +262,10 @@
 								placeholder="透明度"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-14">
+						<el-menu-item
+							index="1-3-14"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label">鼠标悬浮</span>
 							<el-input
 								style="width: 140px"
@@ -230,19 +279,28 @@
 								placeholder="透明度"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-3-15">
+						<el-menu-item
+							index="1-3-15"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline">显示边界</span>
 							<el-checkbox
 								v-model="previewConfigData.L2Dwidget.dev.border"
 							></el-checkbox>
 						</el-menu-item>
-						<el-menu-item index="1-3-16">
+						<el-menu-item
+							index="1-3-16"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline">显示对话框</span>
 							<el-checkbox
 								v-model="previewConfigData.L2Dwidget.dialog.enable"
 							></el-checkbox>
 						</el-menu-item>
-						<el-menu-item index="1-3-17">
+						<el-menu-item
+							index="1-3-17"
+							:disabled="!previewConfigData.L2Dwidget.isRender"
+						>
 							<span class="label inline">使用一言API</span>
 							<el-checkbox
 								v-model="previewConfigData.L2Dwidget.dialog.hitokoto"
@@ -250,19 +308,28 @@
 						</el-menu-item>
 						<el-menu-item-group>
 							<template slot="title">移动端</template>
-							<el-menu-item index="1-3-18">
+							<el-menu-item
+								index="1-3-18"
+								:disabled="!previewConfigData.L2Dwidget.isRender"
+							>
 								<span class="label inline">显示</span>
 								<el-checkbox
 									v-model="previewConfigData.L2Dwidget.mobile.show"
 								></el-checkbox>
 							</el-menu-item>
-							<el-menu-item index="1-3-19">
+							<el-menu-item
+								index="1-3-19"
+								:disabled="!previewConfigData.L2Dwidget.isRender"
+							>
 								<span class="label inline">重力感应</span>
 								<el-checkbox
 									v-model="previewConfigData.L2Dwidget.mobile.motion"
 								></el-checkbox>
 							</el-menu-item>
-							<el-menu-item index="1-3-20">
+							<el-menu-item
+								index="1-3-20"
+								:disabled="!previewConfigData.L2Dwidget.isRender"
+							>
 								<span class="label inline" style="width: 56px">缩放</span>
 								<el-input
 									style="width: 140px"
@@ -284,14 +351,21 @@
 							></el-checkbox>
 						</el-menu-item>
 
-						<el-menu-item index="1-4-2">
+						<el-menu-item
+							index="1-4-2"
+							:disabled="!previewConfigData.CanvasNest.isShow"
+						>
 							<span class="label inline">颜色</span>
 							<el-color-picker
 								v-model="previewConfigData.CanvasNest.color"
+								color-format="rgb"
 							></el-color-picker>
 						</el-menu-item>
 
-						<el-menu-item index="1-4-3">
+						<el-menu-item
+							index="1-4-3"
+							:disabled="!previewConfigData.CanvasNest.isShow"
+						>
 							<span class="label inline" style="width: 56px">透明度</span>
 							<el-input
 								style="width: 140px"
@@ -304,7 +378,10 @@
 							></el-input>
 						</el-menu-item>
 
-						<el-menu-item index="1-4-4">
+						<el-menu-item
+							index="1-4-4"
+							:disabled="!previewConfigData.CanvasNest.isShow"
+						>
 							<span class="label inline" style="width: 56px">层叠值</span>
 							<el-input
 								style="width: 140px"
@@ -313,7 +390,10 @@
 								placeholder="层叠值"
 							></el-input>
 						</el-menu-item>
-						<el-menu-item index="1-4-5">
+						<el-menu-item
+							index="1-4-5"
+							:disabled="!previewConfigData.CanvasNest.isShow"
+						>
 							<span class="label inline" style="width: 56px">数量</span>
 							<el-input
 								style="width: 140px"
@@ -332,7 +412,7 @@
 							></el-color-picker>
 						</el-menu-item>
 						<el-menu-item index="1-6">
-							<span class="label inline">显示</span>
+							<span class="label inline">显示背景图片</span>
 							<el-checkbox
 								v-model="previewConfigData.site.isShow"
 							></el-checkbox>
@@ -373,13 +453,15 @@
 		</div>
 		<div class="preview" :style="previewStyle.previewBox">
 			<div class="mode-control">
-				<span @click="mobile"
+				<span @click="mobile" :class="{ active: watchPattern == 'mobile' }"
 					><i class="fa fa-mobile" aria-hidden="true"></i
 				></span>
-				<span @click="desktop"
+				<span @click="desktop" :class="{ active: watchPattern == 'desktop' }"
 					><i class="fa fa-desktop" aria-hidden="true"></i
 				></span>
-				<span @click="fullScreen"
+				<span
+					@click="fullScreen"
+					:class="{ active: watchPattern == 'fullScreen' }"
 					><i class="fa fa-arrows-h" aria-hidden="true"></i
 				></span>
 			</div>
@@ -401,6 +483,7 @@
 		name: 'SiteM',
 		data() {
 			return {
+				watchPattern: 'desktop',
 				previewStyle: {},
 				previewURL: 'http://10.10.10.131:8081/',
 				time: '',
@@ -492,17 +575,15 @@
 						label: 'z16',
 						value: 'z16'
 					},
-
-
-
 				],
 				previewConfigData: {
 					head: {
-						back_color: '#fff',
-						active_back_color: '#e6e3e3',
+						back_color: '#fafafa',
+						active_back_color: '#fafafa',
+						isShow: true,
 						back_img: '',
-						color: '#000',
-						active_color: '#000',
+						color: '#555',
+						active_color: '#555',
 					},
 					sidebar: {
 						back_color: '#ffffff',
@@ -517,10 +598,9 @@
 						modelName: 'koharu',
 						pluginModelPath: '/live2d-widget-model-koharu/assets/', //模型文件相对与插件根目录路径 live2d-widget-model-nico/assets/
 						tagMode: false, //标签模式
-						debug: true, //调试, 是否在控制台输出日志
+						debug: false, //调试, 是否在控制台输出日志
 						model: {
 							jsonPath: '/live2dw/live2d-widget-model-koharu/assets/koharu.model.json', //主文件路径 /live2dw/live2d-widget-model-nico/assets/nico.model.json
-							///live2dw/live2d-widget-model-koharu/assets/koharu.model.json
 							scale: 1, //模型与canvas的缩放
 						},
 						display: {
@@ -552,13 +632,13 @@
 					},
 					CanvasNest: {
 						isShow: true,
-						color: '0,0,0',
+						color: 'rgb(0,0,255)',
 						opacity: 0.7,
 						zIndex: -1,
 						count: 99,
 					},
 					site: {
-						back_color: '',
+						back_color: '#eeeeee',
 						isShow: true,
 						back_img: '',
 					}
@@ -573,22 +653,7 @@
 			loaded() {
 				this.$refs['previewIframe'].contentWindow.postMessage({
 					type: 'previewPatternData',
-					data: {
-						L2Dwidget: {
-							modelName:'koharu',
-							pluginModelPath: '/live2d-widget-model-koharu/assets/',
-							tagMode: false,
-							debug: false,
-							model: {
-								jsonPath:
-									'/live2dw/live2d-widget-model-koharu/assets/koharu.model.json',
-							},
-							display: { position: 'right', width: 150, height: 300 },
-							mobile: { show: true },
-							log: false,
-						},
-					}
-					// data: this.previewConfigData
+					data: this.previewConfigData
 				}, '*')
 			},
 			headImgChange(file, fileList) {
@@ -611,6 +676,7 @@
 			 * 移动端
 			 */
 			mobile() {
+				this.active_pattern('mobile')
 				this.previewStyle = {
 					previewBox: {
 						position: 'relative'
@@ -623,17 +689,31 @@
 						transform: 'translateX(-50%)',
 					}
 				}
+				const iframeWindow = this.$refs['previewIframe'].contentWindow
+
+				let userAgentProp = { get: function () { return userAgent; } };
+				try {
+					Object.defineProperty(window.navigator, 'userAgent', userAgentProp)
+				} catch (e) {
+					iframeWindow.navigator = Object.create(navigator, {
+						userAgent: userAgentProp
+					})
+				}
+
+
 			},
 			/**
 			 * 桌面
 			 */
 			desktop() {
 				this.previewStyle = {}
+				this.active_pattern('desktop')
 			},
 			/**
 			 * 全屏
 			 */
 			fullScreen() {
+				this.active_pattern('fullScreen')
 				this.previewStyle = {
 					previewBox: {
 						position: 'fixed',
@@ -642,6 +722,9 @@
 					},
 					previewWindow: {}
 				}
+			},
+			active_pattern(pattern) {
+				this.watchPattern = pattern
 			}
 		},
 		watch: {
@@ -711,6 +794,9 @@
 					.fa-arrows-h {
 						font-size: 30px;
 					}
+				}
+				.active {
+					color: #409eff;
 				}
 			}
 			iframe {

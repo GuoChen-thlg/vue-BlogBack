@@ -30,3 +30,4 @@ npm run build
     }
 ]
 ```
+X-Frame-Options: SAMEORIGIN
