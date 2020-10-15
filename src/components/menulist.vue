@@ -1,17 +1,24 @@
 <template>
-		<!-- :default-active="$route.path" -->
+	<!-- :default-active="$route.path" -->
 	<el-menu
 		class="el-menu-vertical"
-		mode='vertical'
+		mode="vertical"
 		:router="true"
-		
 		:background-color="modality['back_color']"
 		:text-color="modality['color']"
 		:active-text-color="modality['active_color']"
 		:collapse="collapse"
 	>
 		<template v-for="(item, index) in route">
-			<el-submenu :index="`${item['path']}`" :key="index">
+			<el-menu-item
+				v-if="!item['child']"
+				:index="`${item['path']}`"
+				:key="index"
+			>
+				<i class="el-icon-menu"></i>
+				<span slot="title">{{item['label']}}</span>
+			</el-menu-item>
+			<el-submenu v-if="item['child']" :index="`${item['path']}`" :key="index">
 				<template slot="title">
 					<i class="el-icon-location"></i>
 					<span v-text="item['label']"></span>

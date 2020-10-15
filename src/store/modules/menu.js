@@ -3,6 +3,12 @@ const menu = {
 	state: {
 		route: [
 			{
+				label: '首页',
+				path: '/home',
+				isRoute: true,
+				icon: '',
+			},
+			{
 				label: '博客管理',
 				path: '',
 				isRoute: false,
@@ -19,20 +25,20 @@ const menu = {
 						path: '/admin/addarticle',
 						isRoute: true,
 						icon: '',
-                    },
-                    {
+					},
+					{
 						label: '文章类别管理',
 						path: '/admin/articleClassifyManage',
 						isRoute: true,
 						icon: '',
 					},
-					{
-						label: '站点个性化',
-						path: '/admin/siteM',
-						isRoute: true,
-						icon: '',
-					},
 				],
+			},
+			{
+				label: '站点个性化',
+				path: '/admin/siteM',
+				isRoute: true,
+				icon: '',
 			},
 		],
 	},

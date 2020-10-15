@@ -79,10 +79,6 @@
 							</el-input>
 						</el-col>
 					</el-form-item>
-
-
-
-					
 				</el-col>
 			</el-form>
 		</el-col>
@@ -92,6 +88,7 @@
 
 <script>
 	import MarkdownEditor from '@/components/markdown.vue'
+	import { addPost } from '@/api'
 	export default {
 		name: 'ArticleEdit',
 		data() {
@@ -171,6 +168,23 @@
 					/**
 					 * 文章发表
 					 */
+					addPost(post).then(res => {
+						if (res.code == 200) {
+							this.title = ''
+							this.category = []
+							this.tags = []
+							this.newcategory = ''
+							this.newtags = ''
+							this.$message('添加成功')
+						} else {
+							if (res.sqlMessage.search('post.title') > 0) {
+								this.$message.error('文章名已存在')
+							} else {
+								this.$message.error('添加失败')
+							}
+						}
+					})
+					console.log(post);
 				})
 			},
 			addcategory() {
