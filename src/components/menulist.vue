@@ -51,7 +51,7 @@
 			}
 		},
 		mounted() {
-			console.log(this.$route.path);
+			// console.log(this.$route.path);
 		},
 		computed: {
 			...mapState('menu', [

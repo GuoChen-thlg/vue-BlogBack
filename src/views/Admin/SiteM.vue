@@ -18,6 +18,7 @@
 								>背景颜色</span
 							>
 							<el-color-picker
+								show-alpha
 								v-model="previewConfigData.head.back_color"
 							></el-color-picker>
 						</el-menu-item>
@@ -26,6 +27,7 @@
 								>激活背景颜色</span
 							>
 							<el-color-picker
+								show-alpha
 								v-model="previewConfigData.head.active_back_color"
 							></el-color-picker>
 						</el-menu-item>
@@ -51,13 +53,12 @@
 							<span class="label inline">背景图片</span>
 							<el-upload
 								class="image-upload"
-								action=" "
+								action="http://localhost:3000/api/upload/siteHeadImg"
 								:multiple="false"
 								list-type="picture-card"
-								:auto-upload="false"
 								:limit="1"
 								accept="image/png, image/jpeg"
-								:on-change="headImgChange"
+								:on-success="headImgSuccess"
 								:before-remove="headImgRemove"
 							>
 								<i slot="default" class="el-icon-plus"></i>
@@ -343,7 +344,7 @@
 						</el-menu-item-group>
 					</el-submenu>
 					<el-submenu index="1-4">
-						<template slot="title">背景动画</template>
+						<template slot="title">背景粒子</template>
 						<el-menu-item index="1-4-1">
 							<span class="label inline">显示</span>
 							<el-checkbox
@@ -421,13 +422,12 @@
 							<span class="label inline">背景图片</span>
 							<el-upload
 								class="image-upload"
-								action=" "
+								action="http://localhost:3000/api/upload/siteBackImg"
 								:multiple="false"
 								list-type="picture-card"
-								:auto-upload="false"
 								:limit="1"
 								accept="image/png, image/jpeg"
-								:on-change="siteImgChange"
+								:on-success="siteImgSuccess"
 								:before-remove="siteImgRemove"
 							>
 								<i slot="default" class="el-icon-plus"></i>
@@ -440,6 +440,16 @@
 						<i class="el-icon-location"></i>
 						<span>站点设置</span>
 					</template>
+							<el-menu-item-group>
+							<template slot="title">域名</template>
+							<el-menu-item index="2-1-2" style="height: auto">
+								<el-input
+									type="text"
+									v-model="previewConfigData.site.previewURL"
+								></el-input>
+							</el-menu-item>
+						</el-menu-item-group>
+
 					<el-submenu index="2-1">
 						<template slot="title">站点作者</template>
 						<el-menu-item-group>
@@ -471,13 +481,12 @@
 							<el-menu-item index="2-1-3" style="height: 100px">
 								<el-upload
 									class="image-upload"
-									action=" "
+									action="http://localhost:3000/api/upload/authorHeadImg"
 									:multiple="false"
 									list-type="picture-card"
-									:auto-upload="false"
 									:limit="1"
 									accept="image/png, image/jpeg"
-									:on-change="authorImgChange"
+									:on-success="authorImageSuccess"
 									:before-remove="authorImgRemove"
 								>
 									<i slot="default" class="el-icon-plus"></i>
@@ -554,9 +563,24 @@
 								</el-menu-item>
 							</el-submenu>
 						</template>
-						<el-menu-item index="2-3-*"
-							><center @click="addlinks">添加</center></el-menu-item
+						<el-menu-item index="2-3-*">
+							<center @click="addlinks">添加</center></el-menu-item
 						>
+					</el-submenu>
+					<el-submenu index="2-4">
+						<template slot="title">版权声明</template>
+						<el-menu-item-group>
+							<template slot="title">协议</template>
+							<el-menu-item index="2-4-1">
+								<el-input v-model="previewConfigData.license.title"></el-input>
+							</el-menu-item>
+						</el-menu-item-group>
+						<el-menu-item-group>
+							<template slot="title">链接</template>
+							<el-menu-item index="2-4-2">
+								<el-input v-model="previewConfigData.license.url"></el-input>
+							</el-menu-item>
+						</el-menu-item-group>
 					</el-submenu>
 				</el-submenu>
 			</el-menu>
@@ -578,7 +602,7 @@
 			<iframe
 				v-if="flag"
 				:style="previewStyle.previewWindow"
-				:src="`${previewURL}?pattern=preview`"
+				:src="`${previewConfigData.site.previewURL}/#/?pattern=preview`"
 				frameborder="0"
 				@load="loaded"
 				ref="previewIframe"
@@ -597,7 +621,6 @@
 			return {
 				watchPattern: 'desktop',
 				previewStyle: {},
-				previewURL: 'http://localhost:8081/#/',
 				flag: true,
 				loading: false,
 				iconList: [],
@@ -755,12 +778,17 @@
 						back_color: '#eeeeee',
 						isShow: true,
 						back_img: '',
+						previewURL:''
 					},
 					author: {},
 					statistics: {},
 					links: [],
 					rewardQR: [],
 					blogrolllist: [],
+					license: {
+						title: '',
+						url: ''
+					}
 				},
 
 			}
@@ -781,12 +809,15 @@
 			},
 			save() {
 				upsite(this.previewConfigData).then(res => {
-					console.log(res.code);
+					if (res.code == 200) {
+						this.$message.success('修改成功')
+					} else {
+						this.$message.error('修改失败')
+					}
 				})
 			},
 			getConfig() {
 				siteInit().then(res => {
-					// console.log(res);
 					if (res.code === 200) {
 						let data = res.data
 						this.previewConfigData = {
@@ -840,13 +871,14 @@
 								},
 								log: data.L2Dwidget.log,
 								dialog: {
-									enable: data.L2Dwidget.dialogenable, //显示人物对话框
+									enable: data.L2Dwidget.dialog.enable, //显示人物对话框
 									hitokoto: data.L2Dwidget.dialog.hitokoto, //使用一言API
 								},
 							},
 							CanvasNest: {
 								isShow: data.CanvasNest.isShow,
 								color: data.CanvasNest.color1,
+								color2: data.CanvasNest.color2,
 								opacity: data.CanvasNest.opacity,
 								zIndex: data.CanvasNest.zIndex,
 								count: data.CanvasNest.count,
@@ -857,22 +889,14 @@
 								back_img: data.site.back_img,
 								copyrightYear: '2020',
 								detailDate: '03/20/2020 00:00:00',
+								previewURL:data.site.previewURL
 							},
-							author: {
-								name: '天火流光',
-								image: 'https://thlg.ml/images/tx.jpg',
-								subtitle: '天火流光的小屋',
-								description:
-									'一个人静静坐在电脑面前写代码的感觉，那是什么感觉?那是武林高手闭关修炼的感觉。',
-							},
-							links: [],
-							rewardQR: [],
+							author:{ ...data.author},
+							links:  data.links,
+							rewardQR:  data.rewardQR,
 							blogrolllist: data.blogrolllist,
-							statistics: {
-								journal: 0,
-								categories: 0,
-								tags: 0,
-							},
+							statistics: data.statistics,
+							license: data.license,
 						}
 					}
 				})
@@ -890,24 +914,35 @@
 					data: this.previewConfigData
 				}, '*')
 			},
-			authorImgChange(file, fileList) {
-				urlToBase64(file.url).then(res => {
-					this.previewConfigData.author.image = res
-				})
+			authorImageSuccess(res, file) {
+				if (res.code == 200) {
+					this.previewConfigData.author.image = 'http://localhost:3000/image/authorHeadImg.jpg'
+					this.$message.success('上传成功')
+				} else {
+					this.$message.error('上传失败')
+				}
 			},
-			authorImgRemove() { this.previewConfigData.author.image = '' },
-			headImgChange(file, fileList) {
-				urlToBase64(file.url).then(res => {
-					this.previewConfigData.head.back_img = res
-				})
+			authorImgRemove() {
+				this.previewConfigData.author.image = ''
 			},
-			headImgRemove(file, fileList) { this.previewConfigData.head.back_img = '' },
-			siteImgChange(file, fileList) {
-				urlToBase64(file.url).then(res => {
-					this.previewConfigData.site.back_img = res
-				})
+			headImgSuccess(res, file) {
+				if (res.code == 200) {
+					this.previewConfigData.head.back_img = 'http://localhost:3000/image/siteHeadImg.jpg'
+					this.$message.success('上传成功')
+				} else {
+					this.$message.error('上传失败')
+				}
 			},
-			siteImgRemove(file, fileList) { this.previewConfigData.site.back_img = '' },
+			headImgRemove() { this.previewConfigData.head.back_img = '' },
+			siteImgSuccess(res, file) {
+				if (res.code == 200) {
+					this.previewConfigData.site.back_img = 'http://localhost:3000/image/siteBackImg.jpg'
+					this.$message.success('上传成功')
+				} else {
+					this.$message.error('上传失败')
+				}
+			},
+			siteImgRemove() { this.previewConfigData.site.back_img = '' },
 			/**
 			 * 移动端
 			 */
@@ -924,15 +959,6 @@
 						left: '50%',
 						transform: 'translateX(-50%)',
 					}
-				}
-				const iframeWindow = this.$refs['previewIframe'].contentWindow
-				let userAgentProp = { get: function () { return userAgent; } };
-				try {
-					Object.defineProperty(window.navigator, 'userAgent', userAgentProp)
-				} catch (e) {
-					iframeWindow.navigator = Object.create(navigator, {
-						userAgent: userAgentProp
-					})
 				}
 			},
 			/**
