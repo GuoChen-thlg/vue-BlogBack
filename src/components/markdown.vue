@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Markdown
-			v-model="text"
+			:value="initText"
 			theme="oneDark"
 			@on-save="save"
 			:toolbars="{
@@ -45,15 +45,8 @@
 		props: {
 			initText: {
 				type: String,
+				default:''
 			}
-		},
-		data() {
-			return {
-				text: ''
-			}
-		},
-		mounted() {
-			this.text = this.initText || ''
 		},
 		methods: {
 			save(md) {

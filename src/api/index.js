@@ -13,6 +13,54 @@ export function addPost(data) {
 	})
 }
 /**
+ *更新
+ * */ 
+export function updatePost(data) {
+	return axios({
+		flag: 'updatePost',
+		url: '/api/updatePost',
+		method: 'POST',
+		data,
+	})
+}
+/**
+ * 查询帖子
+ */
+export function getPost(params) {
+	return axios({
+		flag: 'getPost',
+		url: '/api/queryPost',
+		method: 'GET',
+		params
+	})
+}
+// 帖子列表
+export function getPostList() {
+	return axios({
+		flag: 'getPostPist',
+		url: '/api/postlist',
+		method: 'GET',
+	})
+}
+// 分类列表
+export function getCategoryList() {
+	return axios({
+		flag: 'getCategoryList',
+		url: '/api/categorylist',
+		method: 'GET',
+	})
+}
+/**
+ * 标签列表
+ */
+export function getTagsList() {
+	return axios({
+		flag: 'getTagsList',
+		url: '/api/tagslist',
+		method: 'GET',
+	})
+}
+/**
  * @description 得到配置数据
  *
  * @returns
@@ -24,6 +72,12 @@ export function siteInit() {
 		method: 'GET',
 	})
 }
+/**
+ * @description 更新配置
+ * 
+ * @param {any} data 
+ * @returns 
+ */
 export function upsite(data) {
 	return axios({
 		flag: 'upsite',
@@ -32,6 +86,12 @@ export function upsite(data) {
 		data,
 	})
 }
+/**
+ * @description 查询 ICON
+ * 
+ * @param {any} data 
+ * @returns 
+ */
 export function queryIcon(data) {
 	let app_id = 'M19DXW5X0Q'
 	let api_key='c79b2e61519372a99fa5890db070064c'

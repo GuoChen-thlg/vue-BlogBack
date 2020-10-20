@@ -82,13 +82,13 @@
 				</el-col>
 			</el-form>
 		</el-col>
-		<MarkdownEditor @onSave="save" />
+		<MarkdownEditor @onSave="save" :initText="post.conent" />
 	</section>
 </template>
 
 <script>
 	import MarkdownEditor from '@/components/markdown.vue'
-	import { addPost } from '@/api'
+	import { addPost, getPost, getTagsList, getCategoryList, updatePost } from '@/api'
 	export default {
 		name: 'ArticleEdit',
 		data() {
@@ -116,11 +116,13 @@
 			}
 			return {
 				post: {
+					id: '',
 					title: '',
 					category: [],
 					tags: [],
 					newcategory: '',
 					newtags: '',
+					conent: '',
 				},
 				rules: {
 					title: [
@@ -134,18 +136,31 @@
 				},
 				category: [],
 				tags: [],
+				capacity: ''
 
 			}
 		},
 		mounted() {
-			let capacity = this.$route.meta.capacity
-			if (capacity === 'add') {
-
-			} else if (capacity === 'edit') {
-
+			this.capacity = this.$route.meta.capacity
+			this.setTag()
+			this.setClassify()
+			if (this.capacity === 'add') {
+				console.log('add');
+			} else if (this.capacity === 'edit') {
+				let postName = this.$route.query.postName
+				if (postName) {
+					getPost({ title: postName }).then(res => {
+						if (res.code == 200) {
+							const post = res.data.post
+							this.post.conent = post.conent
+							this.post.title = post.title
+							this.post.category = post.meta.classify.value.map(o => o.value)
+							this.post.tags = post.meta.label.value.map(o => o.value)
+							this.post.id = post.id
+						}
+					})
+				}
 			}
-
-
 		},
 		methods: {
 			submit(callback) {
@@ -160,31 +175,54 @@
 			save(md) {
 				this.submit(() => {
 					let post = {
+						id: this.post.id,
 						title: this.post.title,
 						category: Array.from(new Set([...this.post.category, ...this.post.newcategory.split(' ')])).filter(o => o !== ''),
 						tags: Array.from(new Set([...this.post.tags, ...this.post.newtags.split(' ')])).filter(o => o !== ''),
 						...md
 					}
-					/**
-					 * 文章发表
-					 */
-					addPost(post).then(res => {
-						if (res.code == 200) {
-							this.title = ''
-							this.category = []
-							this.tags = []
-							this.newcategory = ''
-							this.newtags = ''
-							this.$message('添加成功')
-						} else {
-							if (res.sqlMessage.search('post.title') > 0) {
-								this.$message.error('文章名已存在')
+					if (this.capacity == 'add') {
+						console.log('执行')
+						/**
+						 * 文章发表
+						 */
+						addPost(post).then(res => {
+							if (res.code == 200) {
+								this.post.id = ''
+								this.post.title = ''
+								this.post.category = []
+								this.post.tags = []
+								this.post.newcategory = ''
+								this.post.newtags = ''
+								this.$message.success('添加成功')
 							} else {
-								this.$message.error('添加失败')
+								if (res.sqlMessage.search('post.title') > 0) {
+									this.$message.error('文章名已存在')
+								} else {
+									this.$message.error('添加失败')
+								}
 							}
-						}
-					})
-					console.log(post);
+						})
+					}
+					if (this.capacity == 'edit') {
+						/**
+						 * 修改帖子
+						 */
+						updatePost(post).then(res => {
+							if (res.code == 200) {
+								this.$message.success('更新成功')
+								setTimeout(()=>{
+									this.$router.push({name:'ArticleM'})
+								},1000)
+							} else {
+								if (res.sqlMessage.search('post.title') > 0) {
+									this.$message.error('文章名已存在')
+								} else {
+									this.$message.error('更新失败')
+								}
+							}
+						})
+					}
 				})
 			},
 			addcategory() {
@@ -196,6 +234,20 @@
 				let tags = Array.from(new Set([...this.post.tags, ...this.post.newtags.split(' ')])).filter(o => o !== '')
 				this.post.tags = tags
 				this.post.newtags = ''
+			},
+			setTag() {
+				getTagsList().then(res => {
+					if (res.code == 200) {
+						this.tags = res.data.tags
+					}
+				})
+			},
+			setClassify() {
+				getCategoryList().then(res => {
+					if (res.code == 200) {
+						this.category = res.data.categoryList
+					}
+				})
 			},
 			success(response, file, fileList) {
 				console.log(response, file, fileList);

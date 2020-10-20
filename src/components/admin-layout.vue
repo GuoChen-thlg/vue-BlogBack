@@ -102,6 +102,7 @@
 				overflow: auto;
 				.el-main {
 					max-width: 100vw;
+					min-height: 90vh;
 				}
 				.el-footer {
 					width: 100%;

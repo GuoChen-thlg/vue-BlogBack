@@ -65,13 +65,14 @@
 			</el-table-column>
 			<el-table-column label="操作" align="center" prop="desc">
 				<template v-slot="{ row }"
-					>{{ row.id }}
+					>
 					<el-button-group>
 						<el-button
 							type="primary"
 							title="编辑"
 							size="mini"
 							icon="el-icon-edit"
+							@click="compile(row.title)"
 						></el-button>
 						<el-button
 							type="danger"
@@ -87,82 +88,30 @@
 </template>
 
 <script>
+import {getPostList} from '@/api'
 	export default {
 		name: 'ArticleM',
 		data() {
 			return {
-				tableData: [{
-					title: '测试文章',
-					meta: {
-						firstDate: {
-							'icon-class': 'fa fa-calendar-o',
-							label: '发表于',
-							value: '2020-09-22'
-						},
-
-						lastDate: {
-							'icon-class': '',
-							label: '',
-							value: '2020-09-22'
-						},
-						classify: {
-							'icon-class': 'fa fa-folder-o',
-							label: '分类于',
-							value: [{
-								path: '/categories/Test',
-								value: 'Test'
-							},
-							{
-								path: '/categories/Demo',
-								value: 'Demo'
-							}
-							]
-						},
-						label: {
-							'icon-class': '',
-							label: '标签',
-							value: [{
-								path: '/categories/Test',
-								value: 'Test'
-							},
-							{
-								path: '/sad/Demo',
-								value: 'Demo'
-							}
-							]
-						},
-						'word-count': {
-							'icon-class': 'fa fa-file-word-o',
-							label: '字数统计:',
-							value: '400'
-						},
-						duration: {
-							'icon-class': 'fa fa-clock-o',
-							label: '阅读时长 ≈',
-							value: '2'
-						},
-						heat: {
-							'icon-class': 'fa fa-thermometer',
-							label: '热度',
-							value: '400'
-						},
-						comment: {
-							'icon-class': 'fa fa-comment-o',
-							label: '评论',
-							value: '400',
-							path: ''
-						},
-
-					},
-					path: '/post/test',
-					digest: '<p>我们在使用后台传过来的数据的时候，有时候我们会得到树状结构的数据，虽然有时候，后端会处理掉，但，毕竟我们也可以在前端给它处理一下，一方面也锻炼一下脑子，天天写页面都没思考能力了。</p>'
-				}]
+				tableData: []
 			}
 		}
 		, methods: {
 			sele(value) {
 				console.log(value);
+			},
+			compile(postName){
+				this.$router.push({ name: 'ArticleEdit', query: { postName }})
 			}
+		},
+		mounted(){
+getPostList().then(res=>{
+	if(res.code==200){
+		this.tableData=res.data.postList
+	}else{
+		
+	}
+})
 		}
 
 
