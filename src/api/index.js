@@ -23,6 +23,22 @@ export function updatePost(data) {
 		data,
 	})
 }
+export function deletePost(data) {
+	return axios({
+		flag: 'deletePost',
+		url: '/api/deletePost',
+		method: 'POST',
+		data,
+	})
+}
+export function updateArrtPost(data) {
+	return axios({
+		flag: 'updateArrtPost',
+		url: '/api/updateArrtPost',
+		method: 'POST',
+		data
+	})
+}
 /**
  * 查询帖子
  */

@@ -145,7 +145,9 @@
 			this.setTag()
 			this.setClassify()
 			if (this.capacity === 'add') {
-				console.log('add');
+				/**
+				 * 
+				 */
 			} else if (this.capacity === 'edit') {
 				let postName = this.$route.query.postName
 				if (postName) {
@@ -182,7 +184,6 @@
 						...md
 					}
 					if (this.capacity == 'add') {
-						console.log('执行')
 						/**
 						 * 文章发表
 						 */
@@ -194,6 +195,7 @@
 								this.post.tags = []
 								this.post.newcategory = ''
 								this.post.newtags = ''
+								this.post.conent=''
 								this.$message.success('添加成功')
 							} else {
 								if (res.sqlMessage.search('post.title') > 0) {

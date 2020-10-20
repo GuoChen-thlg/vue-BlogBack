@@ -1,33 +1,13 @@
-# vue-back
+# vue-back 后台管理系统
 
-## Project setup
+| 用于个人博客站点后台管理 
 
-```
-npm install
-```
+## 功能实现
 
-### Compiles and hot-reloads for development
+[x] 添加博客
+[x] 更新博客
+[x] 实时预览
+[x] 风格设置
 
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Customize configuration
-
-后台管理系统
-
-```js
-[
-    {
-        pluginModelPath:'live2d-widget-model-chitose/assets/',
-        jsonPath:''
-    }
-]
-```
 X-Frame-Options: SAMEORIGIN
