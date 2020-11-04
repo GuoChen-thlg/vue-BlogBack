@@ -8,24 +8,24 @@
 				</el-menu-item>
 				<el-submenu index="1">
 					<template slot="title">
-						<i class="el-icon-location"></i>
+						<i class="fa-street-view fa"></i>
 						<span>风格设置</span>
 					</template>
 					<el-submenu index="1-1">
 						<template slot="title">头部样式设置</template>
 						<el-menu-item index="1-1-1">
-							<span class="label inline" title="站点头部背景颜色"
-								>背景颜色</span
-							>
+							<span class="label inline" title="站点头部背景颜色">
+								背景颜色
+							</span>
 							<el-color-picker
 								show-alpha
 								v-model="previewConfigData.head.back_color"
 							></el-color-picker>
 						</el-menu-item>
 						<el-menu-item index="1-1-2">
-							<span class="label inline" title="标题背景颜色"
-								>激活背景颜色</span
-							>
+							<span class="label inline" title="标题背景颜色">
+								激活背景颜色
+								</span>
 							<el-color-picker
 								show-alpha
 								v-model="previewConfigData.head.active_back_color"
@@ -440,15 +440,15 @@
 						<i class="el-icon-location"></i>
 						<span>站点设置</span>
 					</template>
-							<el-menu-item-group>
-							<template slot="title">域名</template>
-							<el-menu-item index="2-1-2" style="height: auto">
-								<el-input
-									type="text"
-									v-model="previewConfigData.site.previewURL"
-								></el-input>
-							</el-menu-item>
-						</el-menu-item-group>
+					<el-menu-item-group>
+						<template slot="title">域名</template>
+						<el-menu-item index="2-1-2" style="height: auto">
+							<el-input
+								type="text"
+								v-model="previewConfigData.site.previewURL"
+							></el-input>
+						</el-menu-item>
+					</el-menu-item-group>
 
 					<el-submenu index="2-1">
 						<template slot="title">站点作者</template>
@@ -581,6 +581,21 @@
 								<el-input v-model="previewConfigData.license.url"></el-input>
 							</el-menu-item>
 						</el-menu-item-group>
+					</el-submenu>
+				</el-submenu>
+				<el-submenu index="3">
+					<template slot="title">
+						<i class="fa-wrench fa"></i>
+						<span>功能设置</span>
+					</template>
+					<el-submenu index="3-1">
+						<template slot="title">
+							<span>搜索</span>
+						</template>
+						<el-menu-item index="3-1-1">
+							<span class="label inline">开启搜索</span>
+							<el-checkbox v-model="previewConfigData.isSearch"></el-checkbox>
+						</el-menu-item>
 					</el-submenu>
 				</el-submenu>
 			</el-menu>
@@ -778,7 +793,7 @@
 						back_color: '#eeeeee',
 						isShow: true,
 						back_img: '',
-						previewURL:''
+						previewURL: ''
 					},
 					author: {},
 					statistics: {},
@@ -788,7 +803,8 @@
 					license: {
 						title: '',
 						url: ''
-					}
+					},
+					isSearch: false,
 				},
 
 			}
@@ -889,14 +905,15 @@
 								back_img: data.site.back_img,
 								copyrightYear: '2020',
 								detailDate: '03/20/2020 00:00:00',
-								previewURL:data.site.previewURL
+								previewURL: data.site.previewURL
 							},
-							author:{ ...data.author},
-							links:  data.links,
-							rewardQR:  data.rewardQR,
+							author: { ...data.author },
+							links: data.links,
+							rewardQR: data.rewardQR,
 							blogrolllist: data.blogrolllist,
 							statistics: data.statistics,
 							license: data.license,
+							isSearch: data.isSearch
 						}
 					}
 				})

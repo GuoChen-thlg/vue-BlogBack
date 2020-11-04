@@ -15,12 +15,12 @@
 				:index="`${item['path']}`"
 				:key="index"
 			>
-				<i class="el-icon-menu"></i>
+				<i :class="[item['icon'],'fa']"></i>
 				<span slot="title">{{item['label']}}</span>
 			</el-menu-item>
 			<el-submenu v-if="item['child']" :index="`${item['path']}`" :key="index">
 				<template slot="title">
-					<i class="el-icon-location"></i>
+					<i :class="[item['icon'],'fa']"></i>
 					<span v-text="item['label']"></span>
 				</template>
 				<el-menu-item-group v-if="item['child']">

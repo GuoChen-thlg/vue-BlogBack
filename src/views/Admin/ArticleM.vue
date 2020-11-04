@@ -69,7 +69,7 @@
 				:formatter="dateFormat"
 			>
 			</el-table-column>
-			<el-table-column label="状态" width="140" v-slot="{ row }" prop="desc">
+			<el-table-column label="状态" width="140" align="center"  v-slot="{ row }" prop="desc">
 				<el-switch
 					style="display: block"
 					v-model="row.meta.is_open"
@@ -81,7 +81,7 @@
 				>
 				</el-switch>
 			</el-table-column>
-			<el-table-column label="设为精选" width="80" prop="desc">
+			<el-table-column label="设为精选" width="120" align="center"  prop="desc">
 				<template v-slot="{ row }">
 					<el-switch
 						style="display: block"

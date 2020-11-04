@@ -24,10 +24,13 @@
 		display: block;
 		cursor: pointer;
 	}
+	i[class^='fa-'] {
+		margin-right: 5px;
+		width: 24px;
+		text-align: center;
+		font-size: 18px;
+		vertical-align: middle;
+	}
 </style>
 <style lang="scss">
-
-
-
-
 </style>

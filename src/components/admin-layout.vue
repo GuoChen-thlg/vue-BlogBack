@@ -24,7 +24,7 @@
 				<el-main>
 					<slot> 主要的 </slot>
 				</el-main>
-				<el-footer> 脚部 V:0.1.0</el-footer>
+				<!-- <el-footer> 脚部 V:0.1.0</el-footer> -->
 			</section>
 		</div>
 	</el-container>

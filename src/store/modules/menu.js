@@ -6,13 +6,13 @@ const menu = {
 				label: '首页',
 				path: '/home',
 				isRoute: true,
-				icon: '',
+				icon: 'fa-home',
 			},
 			{
 				label: '博客管理',
 				path: '',
 				isRoute: false,
-				icon: '',
+				icon: 'fa-sliders',
 				child: [
 					{
 						label: '文章管理',
@@ -38,7 +38,7 @@ const menu = {
 				label: '站点个性化',
 				path: '/admin/siteM',
 				isRoute: true,
-				icon: '',
+				icon: 'fa-cog',
 			},
 		],
 	},
